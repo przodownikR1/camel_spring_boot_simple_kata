@@ -44,8 +44,8 @@ dependencies {
     compile 'org.apache.camel:camel-metrics:$camelVersion'    
    compile "org.apache.camel:camel-spring-boot:$camelVersion"
     compile "org.apache.camel:camel-quartz2:$camelVersion"
-   // compile 'org.apache.camel:camel-spring:$camelVersion'
-   // compile 'org.apache.camel:camel-spring-javaconfig:$camelVersion'
+    compile 'org.apache.camel:camel-spring:$camelVersion'
+    compile 'org.apache.camel:camel-spring-javaconfig:$camelVersion'
    
     compile "org.apache.camel:camel-jaxb:$camelVersion"
     compile "org.apache.camel:camel-jackson:$camelVersion"
@@ -55,6 +55,7 @@ dependencies {
     compile "org.apache.camel:camel-mail:$camelVersion"
     compile "org.apache.camel:camel-bindy:$camelVersion"
     compile "org.apache.camel:camel-servlet:$camelVersion"
+    compile "org.apache.camel:camel-cxf:$camelVersion"
     
     compile("org.springframework:spring-jms:4.1.7.RELEASE")
     compile("org.apache.activemq:activemq-broker:5.11.1")
@@ -67,6 +68,12 @@ dependencies {
     
     compile("org.projectlombok:lombok:${lombokVersion}")
     compile("com.google.guava:guava:${guavaVersion}")
+    
+    
+    compile 'org.apache.cxf:cxf-rt-frontend-jaxws:3.1.1'
+    compile 'org.apache.cxf:cxf-rt-transports-http:3.1.1'
+    compile 'org.apache.cxf:cxf-core:3.1.1'
+    
 }
 
 println "Using Spring Boot version: [$springBootVersion]"

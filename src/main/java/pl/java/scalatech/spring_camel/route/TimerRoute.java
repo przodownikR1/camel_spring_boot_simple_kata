@@ -14,7 +14,8 @@ public class TimerRoute extends SpringRouteBuilder {
     @Override
     public void configure() throws Exception {
         //      from("timer:test?period=1s")
-        from("quartz2://myGroup/przodownik?cron=*+*+10-18+?+*+MON-FRI").process(exchange -> log.info("+++ timer {}", LocalDateTime.now()));
+        from("quartz2://myGroup/przodownik?cron=*+*+10-18+?+*+MON-FRI").transform().simple("ref:mySimpleBean")
+                .process(exchange -> log.info("+++ timer {}", LocalDateTime.now())).to("log:pl.java.scalatech?level=INFO");
     }
 
 }

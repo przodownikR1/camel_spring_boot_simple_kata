@@ -1,4 +1,4 @@
-package pl.java.scalatech.spring_camel.route;
+package pl.java.scalatech.spring_camel.route.file;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.context.annotation.Profile;

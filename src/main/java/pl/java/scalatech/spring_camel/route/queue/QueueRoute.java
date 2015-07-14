@@ -1,4 +1,4 @@
-package pl.java.scalatech.spring_camel.route;
+package pl.java.scalatech.spring_camel.route.queue;
 
 import java.time.LocalDateTime;
 import java.util.function.Supplier;

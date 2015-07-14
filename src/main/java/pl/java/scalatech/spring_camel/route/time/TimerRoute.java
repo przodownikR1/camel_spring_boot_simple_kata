@@ -1,4 +1,4 @@
-package pl.java.scalatech.spring_camel.route;
+package pl.java.scalatech.spring_camel.route.time;
 
 import java.time.LocalDateTime;
 

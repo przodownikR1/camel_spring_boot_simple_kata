@@ -14,7 +14,7 @@ import org.apache.camel.dataformat.bindy.annotation.DataField;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@CsvRecord(separator = ",", crlf = ",\n")
+@CsvRecord(separator = ",", crlf = "\n")
 public class Person {
 
     @DataField(pos = 1)

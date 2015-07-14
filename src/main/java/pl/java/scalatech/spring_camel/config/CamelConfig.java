@@ -88,4 +88,19 @@ public class CamelConfig implements CamelContextConfiguration {
         camelContext.addComponent("test-activemq", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
 
     }
+
+    //TODO
+    private void setupActiveMQComponent(CamelContext camelContext) {
+        // setup the ActiveMQ component
+        log.debug("Setup the ActiveMQ Component");
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
+        connectionFactory.setBrokerURL("vm://localhost?broker.persistent=false&broker.useJmx=false");
+
+        // and register it into the CamelContext
+        log.debug("Registering JmsComponenet in camel context");
+        JmsComponent answer = new JmsComponent();
+        answer.setConnectionFactory(connectionFactory);
+        camelContext.addComponent("jms", answer);
+    }
+
 }

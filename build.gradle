@@ -45,7 +45,7 @@ dependencies {
    compile "org.apache.camel:camel-spring-boot:$camelVersion"
     compile "org.apache.camel:camel-quartz2:$camelVersion"
     compile 'org.apache.camel:camel-spring:$camelVersion'
-   // compile 'org.apache.camel:camel-spring-javaconfig:$camelVersion'
+   compile 'org.apache.camel:camel-spring-javaconfig:2.15.2'
    
     compile "org.apache.camel:camel-jaxb:$camelVersion"
     compile "org.apache.camel:camel-jackson:$camelVersion"

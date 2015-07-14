@@ -80,3 +80,4 @@ local.properties
 
 gc.log
 *.log
+outbox

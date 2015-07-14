@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Configuration
 @Slf4j
-@ComponentScan(basePackages = "pl.java.scalatech.spring_camel.route", includeFilters = { @Filter(Component.class) })
+@ComponentScan(basePackages = { "pl.java.scalatech.spring_camel.route", "pl.java.scalatech.spring_camel.processor" }, includeFilters = { @Filter(Component.class) })
 @PropertySource("classpath:camel.properties")
 public class CamelConfig implements CamelContextConfiguration {
 

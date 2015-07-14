@@ -1,10 +1,12 @@
 package pl.java.scalatech.spring_camel.route;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.context.annotation.Profile;
 
 import pl.java.scalatech.spring_camel.ws.PingService;
 
 // @Component
+@Profile("cxf")
 public class PingRoute extends RouteBuilder {
 
     @Override

@@ -1,12 +1,15 @@
 package pl.java.scalatech.spring_camel.config;
 
+import java.time.LocalDateTime;
 import java.util.Random;
+import java.util.function.Supplier;
 
 import javax.annotation.PostConstruct;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.transport.servlet.CXFServlet;
@@ -58,4 +61,22 @@ public class CamelConfig {
         return "my hash: " + Hashing.sha256().newHasher().putInt(random.nextInt(100)).hash().toString();
     }
 
+    @Bean
+    public Supplier<LocalDateTime> currentTime() {
+        return () -> LocalDateTime.now();
+    }
+
+    @Bean
+    RouteBuilder exampleRoute(Supplier<LocalDateTime> currentTime) {
+        return new RouteBuilder() {
+            {
+                log.info("++++ exampleRoute init");
+            }
+
+            @Override
+            public void configure() throws Exception {
+                from("direct:exampleRoute").setHeader("curTime", method(currentTime)).log("${header[now]} - Hello, ${body}!!");
+            }
+        };
+    }
 }

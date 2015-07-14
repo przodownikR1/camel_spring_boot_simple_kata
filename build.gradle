@@ -41,15 +41,23 @@ dependencies {
     testCompile "org.springframework.boot:spring-boot-starter-test"
     
     compile 'org.apache.camel:camel-core:$camelVersion'
-    compile 'org.apache.camel:camel-metrics:$camelVersion'    
+    compile 'org.apache.camel:camel-metrics:2.15.2' 
    compile "org.apache.camel:camel-spring-boot:$camelVersion"
     compile "org.apache.camel:camel-quartz2:$camelVersion"
     compile 'org.apache.camel:camel-spring:$camelVersion'
-    compile 'org.apache.camel:camel-spring-javaconfig:$camelVersion'
+   // compile 'org.apache.camel:camel-spring-javaconfig:$camelVersion'
    
     compile "org.apache.camel:camel-jaxb:$camelVersion"
     compile "org.apache.camel:camel-jackson:$camelVersion"
     compile "org.apache.camel:camel-jms:$camelVersion"
+    
+    compile("org.apache.activemq:activemq-broker")
+    compile("org.apache.activemq:activemq-client")
+    compile("org.apache.activemq:activemq-camel:5.11.1")
+    compile("org.apache.xbean:xbean-spring:4.2") {
+        exclude module: "org.springframework:spring"
+    }
+    
   //  compile "org.apache.camel:camel-jetty:$camelVersion"
     compile "org.apache.camel:camel-velocity:$camelVersion"
     compile "org.apache.camel:camel-mail:$camelVersion"

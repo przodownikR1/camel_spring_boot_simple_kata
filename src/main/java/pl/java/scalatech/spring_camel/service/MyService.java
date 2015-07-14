@@ -19,4 +19,9 @@ public class MyService {
         producer.sendBody("direct:exampleRoute", "Good morning");
     }
 
+    @Scheduled(fixedDelay = 5000)
+    public void invokeQueueRoute() {
+        producer.sendBody("direct:qStart", "Good morning");
+    }
+
 }

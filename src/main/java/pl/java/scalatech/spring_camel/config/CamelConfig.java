@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Configuration
 @Slf4j
-@ComponentScan(basePackages = { "pl.java.scalatech.spring_camel.route", "pl.java.scalatech.spring_camel.processor" }, includeFilters = { @Filter(Component.class) })
+@ComponentScan(basePackages = { "pl.java.scalatech.spring_camel.route", "pl.java.scalatech.spring_camel.processor","pl.java.scalatech.spring_camel.eip_beans" }, includeFilters = { @Filter(Component.class) })
 @PropertySource("classpath:camel.properties")
 public class CamelConfig implements CamelContextConfiguration {
 
@@ -28,11 +28,13 @@ public class CamelConfig implements CamelContextConfiguration {
     @PostConstruct
     public void init() {
         camelContext.setTracing(true);
+        
     }
 
     @Override
     public void beforeApplicationStart(CamelContext camelContext) {
         log.info("+++  beforeApplicationStart");
+        
        // final ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
       //  camelContext.addComponent("test-activemq", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
 

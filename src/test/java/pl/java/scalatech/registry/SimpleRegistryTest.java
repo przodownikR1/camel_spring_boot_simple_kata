@@ -15,11 +15,9 @@ public class SimpleRegistryTest {
         CamelContext context = new DefaultCamelContext(registry);
 
         context.addRoutes(new RouteBuilder() {
-
             @Override
             public void configure() throws Exception {
                 from("direct:start").to("bean:simpleBean").to("mock:end");
-
             }
         });
         context.start();

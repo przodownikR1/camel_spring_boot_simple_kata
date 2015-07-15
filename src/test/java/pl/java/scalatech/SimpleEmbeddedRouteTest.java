@@ -2,25 +2,17 @@ package pl.java.scalatech;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.impl.DefaultCamelContext;
 import org.junit.Test;
 
 @Slf4j
-public class SimpleEmbeddedRouteTest {
+public class SimpleEmbeddedRouteTest extends CommonCreateCamelContext {
     @Test
     public void shouldCamleRouteWork() throws Exception {
-        CamelContext context = new DefaultCamelContext();
-        context.addRoutes(new MyRouteBuilder());
-        context.start();
-        context.setTracing(true);
-        Thread.sleep(2000);
-        context.stop();
+        createContextWithGivenRoute(new MyRouteBuilder(), 2000);
     }
-
 }
 
 class MyRouteBuilder extends RouteBuilder {
@@ -45,7 +37,5 @@ class MyProcessor implements Processor {
         log.info("Prefixing body ...");
         inBody = "Prefixed " + inBody;
         exchange.getIn().setBody(inBody);
-
     }
-
 }

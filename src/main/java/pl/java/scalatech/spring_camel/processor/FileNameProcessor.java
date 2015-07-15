@@ -15,7 +15,7 @@ public class FileNameProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        exchange.getIn().setHeader("CamelFileName", generateFileName());
+        exchange.getIn().setHeader(Exchange.FILE_NAME, generateFileName());
     }
 
     private String generateFileName() {

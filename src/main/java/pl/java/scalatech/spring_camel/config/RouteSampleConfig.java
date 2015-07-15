@@ -4,11 +4,14 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import javax.ws.rs.Produces;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import com.google.common.hash.Hashing;
 
 @Configuration
 @ComponentScan(basePackages = "pl.java.scalatech.spring_camel.route", includeFilters = { @Filter(Component.class) })
+@Profile("sample")
 public class RouteSampleConfig {
 
     private static Random random = new Random();

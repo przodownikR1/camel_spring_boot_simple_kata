@@ -33,8 +33,8 @@ public class CamelConfig implements CamelContextConfiguration {
     @Override
     public void beforeApplicationStart(CamelContext camelContext) {
         log.info("+++  beforeApplicationStart");
-        final ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
-        camelContext.addComponent("test-activemq", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+       // final ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost?broker.persistent=false");
+      //  camelContext.addComponent("test-activemq", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
 
     }
 

@@ -1,9 +1,13 @@
 package pl.java.scalatech.spring_camel.route.queue;
 
+import javax.ws.rs.Produces;
+
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("queue")
 public class QueueConsumer extends RouteBuilder {
 
     @Override

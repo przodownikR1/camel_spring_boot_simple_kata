@@ -3,11 +3,15 @@ package pl.java.scalatech.spring_camel.route.queue;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
+import javax.ws.rs.Produces;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("queue")
 public class QueueRoute extends RouteBuilder {
     @Autowired
     private Supplier<LocalDateTime> currentTime;

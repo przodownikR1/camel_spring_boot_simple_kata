@@ -14,12 +14,12 @@ public class MyService {
         producer.sendBody("seda:start", "Hello world");
     }
 
-    @Scheduled(fixedDelay = 5000)
+   // @Scheduled(fixedDelay = 5000)
     public void invokeExampleRoute() {
         producer.sendBody("direct:exampleRoute", "Good morning");
     }
 
-    @Scheduled(fixedDelay = 5000)
+   // @Scheduled(fixedDelay = 5000)
     public void invokeQueueRoute() {
         producer.sendBody("direct:qStart", "Good morning");
     }

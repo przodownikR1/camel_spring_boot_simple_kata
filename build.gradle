@@ -84,7 +84,6 @@ dependencies {
     compile 'javax.xml.bind:jaxb-api:2.2.12'
     compile 'com.sun.xml.bind:jaxb-xjc:2.2.11'
         
-    
 }
 
 println "Using Spring Boot version: [$springBootVersion]"

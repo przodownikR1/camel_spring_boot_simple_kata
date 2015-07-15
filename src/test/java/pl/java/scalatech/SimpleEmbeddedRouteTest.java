@@ -14,15 +14,11 @@ public class SimpleEmbeddedRouteTest {
     @Test
     public void shouldCamleRouteWork() throws Exception {
         CamelContext context = new DefaultCamelContext();
-
         context.addRoutes(new MyRouteBuilder());
         context.start();
         context.setTracing(true);
-
         Thread.sleep(2000);
-
         context.stop();
-
     }
 
 }
@@ -42,7 +38,6 @@ class MyRouteBuilder extends RouteBuilder {
 
 @Slf4j
 class MyProcessor implements Processor {
-
     @Override
     public void process(Exchange exchange) throws Exception {
         String inBody = exchange.getIn().getBody(String.class);

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<customer firstName="slawek" lastName="borowiec" login="przodownik" salary="33.22"/>

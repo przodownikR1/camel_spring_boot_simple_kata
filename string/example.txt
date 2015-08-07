@@ -1,0 +1,9 @@
+slawek
+borowiec
+aga
+bak
+statek
+plane
+car
+motocycle
+sky

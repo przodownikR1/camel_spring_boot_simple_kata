@@ -19,7 +19,7 @@ public abstract class CommonCreateCamelContext {
         ModelCamelContext context = new DefaultCamelContext(registry);
         Tracer tracer = new Tracer();
         tracer.setLogName("MyTracerLog");
-        tracer.getDefaultTraceFormatter().setShowProperties(true);
+        tracer.getDefaultTraceFormatter().setShowProperties(false);
         tracer.getDefaultTraceFormatter().setShowHeaders(false);
         tracer.getDefaultTraceFormatter().setShowBody(true);
         context.addInterceptStrategy(tracer);
@@ -29,7 +29,7 @@ public abstract class CommonCreateCamelContext {
         this.pt = context.createProducerTemplate();
 
         context.start();
-        context.setTracing(true);
+        context.setTracing(false);
         Thread.sleep(timeWork);
         context.stop();
     }

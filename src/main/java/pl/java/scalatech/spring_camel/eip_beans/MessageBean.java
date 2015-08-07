@@ -10,7 +10,7 @@ import pl.java.scalatech.spring_camel.beans.Customer;
 @Slf4j
 public class MessageBean {
 	    public String read(Customer msg) {
-	        log.info("+++ messageBean :  {}",msg);      
-	        return msg + ":" + Thread.currentThread();
+	             
+	        return msg + "  :   " + Thread.currentThread();
 	    }
 	}

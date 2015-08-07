@@ -2,6 +2,7 @@ package pl.java.scalatech.csv;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 
 import org.apache.camel.ProducerTemplate;
@@ -10,6 +11,7 @@ import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.junit.Test;
 
 import pl.java.scalatech.CommonCreateCamelContext;
+import pl.java.scalatech.spring_camel.beans.Person;
 
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
@@ -32,11 +34,11 @@ public class ProducerCsvTest extends CommonCreateCamelContext {
         public void configure() throws Exception {
             ProducerTemplate pt = getContext().createProducerTemplate();
             from("file:inbox?noop=true&delay=5000").marshal(bindy).to("file://outbox");//?fileName=${header.count}.txt
-            /*
-             * pt.sendBody("direct:csv",
-             * Person.builder().clientNr(Hashing.sha256().newHasher().putInt(random.nextInt(100)).hash().toString()).firstName("slawek")
-             * .lastName("borowiec").orderDate(new Date()).build());
-             */
+           /*  from("direct:csv").marshal(bindy).log("Result : ${body}");
+              pt.sendBody("direct:csv",
+              Person.builder().clientNr(Hashing.sha256().newHasher().putInt(random.nextInt(100)).hash().toString()).firstName("slawek")
+              .lastName("borowiec").orderDate(new Date()).build());*/
+             
 
             //.setHeader("CamelFileName", constant("report.txt")).
         }

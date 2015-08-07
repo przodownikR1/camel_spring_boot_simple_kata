@@ -29,6 +29,6 @@ public class Customer {
     private String login;
 
     @XmlAttribute
-    private BigDecimal salaty;
+    private BigDecimal salary;
 
 }

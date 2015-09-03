@@ -58,7 +58,7 @@ dependencies {
         exclude module: "org.springframework:spring"
     }
     
-  //  compile "org.apache.camel:camel-jetty:$camelVersion"
+    compile "org.apache.camel:camel-csv:$camelVersion"
     compile "org.apache.camel:camel-velocity:$camelVersion"
     compile "org.apache.camel:camel-mail:$camelVersion"
     compile "org.apache.camel:camel-bindy:$camelVersion"

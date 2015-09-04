@@ -1,41 +1,41 @@
 package pl.java.scalatech.aggregate;
 
-import java.util.Map;
+import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
-import org.assertj.core.util.Maps;
+import org.assertj.core.util.Sets;
 
 import pl.java.scalatech.spring_camel.csv.Invoice;
 import pl.java.scalatech.spring_camel.csv.SummaryInvoice;
 
 @Slf4j
 public class InvoiceAggregator implements AggregationStrategy {
-    private Map<Long, SummaryInvoice> map = Maps.newHashMap();
+    private Set<SummaryInvoice> set = Sets.newHashSet();
 
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
         Invoice newInvoice = newExchange.getIn().getBody(Invoice.class);
-        log.info("new headers  {}",newExchange.getIn().getHeaders());
+       
         if (oldExchange == null) {
-             map.put(newInvoice.getId(), new SummaryInvoice(newInvoice.getCredit(),newInvoice.getDebit(),newInvoice.getDebit()-newInvoice.getCredit()));
-             newExchange.getIn().setBody(map);
+             set.add(new SummaryInvoice(newInvoice.getId(),newInvoice.getCredit(),newInvoice.getDebit(),newInvoice.getDebit()-newInvoice.getCredit()));
+             newExchange.getIn().setBody(set);
             return newExchange; 
             }
-        log.info("old headers  {}",oldExchange.getIn().getHeaders());
-        map = oldExchange.getIn().getBody(Map.class);
-        if(map.containsKey(newInvoice.getId())) {
-            SummaryInvoice si = map.get(newInvoice.getId());
+       
+        set = oldExchange.getIn().getBody(Set.class);
+        if(set.stream().filter(t->t.getId()==newInvoice.getId()).findFirst().isPresent()) {
+            SummaryInvoice si = set.stream().filter(t->t.getId()==newInvoice.getId()).findFirst().get();
             si.setCredit(si.getCredit()+newInvoice.getCredit());
             si.setDebit(si.getDebit()+newInvoice.getDebit());
             si.setSaldo(si.getSaldo()+(newInvoice.getCredit()-newInvoice.getDebit()));
         }else {
-            map.put(newInvoice.getId(), new SummaryInvoice(newInvoice.getCredit(),newInvoice.getDebit(),newInvoice.getDebit()-newInvoice.getCredit()));
+            set.add(new SummaryInvoice(newInvoice.getId(),newInvoice.getCredit(),newInvoice.getDebit(),newInvoice.getDebit()-newInvoice.getCredit()));
             
         }
-        log.info("++++ aggregate :  {}", oldExchange.getIn().getBody(Map.class));
+      //  log.info("++++ aggregate :  {}", oldExchange.getIn().getBody(Map.class));
         return oldExchange;
     
      

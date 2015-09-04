@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import pl.java.scalatech.CommonCreateCamelContext;
 import pl.java.scalatech.aggregate.InvoiceAggregator;
+import pl.java.scalatech.spring_camel.csv.SummaryInvoice;
 
 public class SplitAndAggregateInvoiceTest extends CommonCreateCamelContext {
     @Test
@@ -40,8 +41,8 @@ public class SplitAndAggregateInvoiceTest extends CommonCreateCamelContext {
             .setHeader("id", simple("${body.id}")).aggregate(constant(true), new InvoiceAggregator()).completionSize(8)
             //.setHeader("id", simple("${body.id}")).aggregate(header("id"), new GroupedExchangeAggregationStrategy()).completionTimeout(1500)
           
-            
-                    .log(LoggingLevel.INFO, "myCamel", "OOOO                  ${body}  Completed by ${property.CamelAggregatedCompletedBy}  size:   ");
+             .split().body()
+            .log(LoggingLevel.INFO, "myCamel", "OOOO                  ${body}  Completed by ${property.CamelAggregatedCompletedBy}  size:   ");
                    
         }
     }

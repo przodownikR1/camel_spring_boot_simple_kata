@@ -18,18 +18,31 @@ public class InvoiceAggregator implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
         Invoice newInvoice = newExchange.getIn().getBody(Invoice.class);
-
-        if (oldExchange == null) { return newExchange; }
-        if (oldExchange != null) {
-
-            Invoice invoice = oldExchange.getIn().getBody(Invoice.class);
-            invoice.setCredit(invoice.getCredit() + newInvoice.getCredit());
-            invoice.setDebit(invoice.getDebit() + newInvoice.getDebit());
-            oldExchange.getIn().setBody(invoice);
-
+        log.info("new headers  {}",newExchange.getIn().getHeaders());
+        if (oldExchange == null) {
+             map.put(newInvoice.getId(), new SummaryInvoice(newInvoice.getCredit(),newInvoice.getDebit(),newInvoice.getDebit()-newInvoice.getCredit()));
+             newExchange.getIn().setBody(map);
+            return newExchange; 
+            }
+        log.info("old headers  {}",oldExchange.getIn().getHeaders());
+        map = oldExchange.getIn().getBody(Map.class);
+        if(map.containsKey(newInvoice.getId())) {
+            SummaryInvoice si = map.get(newInvoice.getId());
+            si.setCredit(si.getCredit()+newInvoice.getCredit());
+            si.setDebit(si.getDebit()+newInvoice.getDebit());
+            si.setSaldo(si.getSaldo()+(newInvoice.getCredit()-newInvoice.getDebit()));
+        }else {
+            map.put(newInvoice.getId(), new SummaryInvoice(newInvoice.getCredit(),newInvoice.getDebit(),newInvoice.getDebit()-newInvoice.getCredit()));
+            
         }
-        log.info("++++ aggregate :  {}", oldExchange.getIn().getBody(Invoice.class));
+        log.info("++++ aggregate :  {}", oldExchange.getIn().getBody(Map.class));
         return oldExchange;
+    
+     
+        
+        
+        
+        
     }
 
 }

@@ -78,7 +78,6 @@ public class TheadRoutesTest extends CommonCreateCamelContext{
         public void configure() throws Exception {
             from("timer:fire?period=100").routeId("timer").setBody(constant("slawek")).to("direct:start");
             from("direct:start").routeId("normalRoute").log(LoggingLevel.INFO,"myCamel","++++  ${body} :  ${threadName}").delay(400).end();
-            
         }
 }
     class MyParallelRouteBuilder extends RouteBuilder {
@@ -86,7 +85,6 @@ public class TheadRoutesTest extends CommonCreateCamelContext{
         public void configure() throws Exception {
             from("timer:fire?period=100").routeId("timer").setBody(constant("slawek")).to("direct:start");
             from("direct:start").routeId("parallelRoute").log(LoggingLevel.INFO,"myCamel","++++ start ${body} :  ${threadName}").threads().delay(400).log(LoggingLevel.INFO,"myCamel","++++ end  ${body} :  ${threadName}").end();
-            
         }
 }
     

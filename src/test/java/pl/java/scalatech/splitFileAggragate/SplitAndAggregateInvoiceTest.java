@@ -29,8 +29,9 @@ public class SplitAndAggregateInvoiceTest extends CommonCreateCamelContext {
         public void configure() throws Exception {
             from("file://inbox?fileName=invoice.csv&noop=true").routeId("Bindy :: Invoice bindy  ").unmarshal(bindy).split(body())
 
-            .setHeader("id", simple("${body.id}")).aggregate(header("id"), new InvoiceAggregator()).completionSize(4).completionTimeout(1500)
-                    .log(LoggingLevel.INFO, "myCamel", "OOOO                  ${body}  Completed by ${property.CamelAggregatedCompletedBy} ");
+            .setHeader("id", simple("${body.id}")).aggregate(header("id"), new InvoiceAggregator()).completionSize(4)
+            /* .completionPredicate(simple("${body.size}==4")) */
+            .log(LoggingLevel.INFO, "myCamel", "OOOO                  ${body}  Completed by ${property.CamelAggregatedCompletedBy} ");
         }
     }
 }

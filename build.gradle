@@ -51,6 +51,8 @@ dependencies {
     compile "org.apache.camel:camel-jackson:$camelVersion"
     compile "org.apache.camel:camel-jms:$camelVersion"
     compile "org.apache.camel:camel-stream:$camelVersion"
+    compile "org.apache.camel:camel-saxon:$camelVersion"
+    
     compile("org.apache.activemq:activemq-broker")
     compile("org.apache.activemq:activemq-client")
     compile("org.apache.activemq:activemq-camel:5.11.1")

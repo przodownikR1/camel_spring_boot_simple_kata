@@ -81,3 +81,5 @@ local.properties
 gc.log
 *.log
 outbox
+inbox/* 
+inbox/ 

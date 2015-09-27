@@ -17,7 +17,7 @@ import pl.java.scalatech.aggregate.InvoiceAggregator;
 public class SplitAndAggregateInvoiceTest extends CommonCreateCamelContext {
     @Test
     public void shouldAggregateWork() throws Exception {
-        createContextWithGivenRoute(new MyRouteBuilder(),4000);
+        createContextWithGivenRoute(new MyRouteBuilder(), 4000);
     }
 
     class MyRouteBuilder extends RouteBuilder {
@@ -34,33 +34,32 @@ public class SplitAndAggregateInvoiceTest extends CommonCreateCamelContext {
         public void configure() throws Exception {
             from("file://inbox?fileName=invoice.csv&noop=true").routeId("Bindy :: Invoice bindy  ").removeHeaders("CamelFile*").unmarshal(bindy).split(body())
 
-            //.setHeader("id", simple("${body.id}")).aggregate(header("id"), new InvoiceAggregator()).completionTimeout(1500)
-            .setHeader("id", simple("${body.id}")).aggregate(constant(true), new InvoiceAggregator()).completionSize(8).parallelProcessing()
-            //.setHeader("id", simple("${body.id}")).aggregate(header("id"), new GroupedExchangeAggregationStrategy()).completionTimeout(1500)
-          
-             .split().body()
-            .log(LoggingLevel.INFO, "myCamel", "OOOO      ${threadName}        ${body}  Completed by ${property.CamelAggregatedCompletedBy}  size:   ");
-                   
+                    //.setHeader("id", simple("${body.id}")).aggregate(header("id"), new InvoiceAggregator()).completionTimeout(1500)
+                    .setHeader("id", simple("${body.id}")).aggregate(constant(true), new InvoiceAggregator()).completionSize(8).parallelProcessing()
+                    //.setHeader("id", simple("${body.id}")).aggregate(header("id"), new GroupedExchangeAggregationStrategy()).completionTimeout(1500)
+
+                    .split().body()
+                    .log(LoggingLevel.INFO, "myCamel", "OOOO      ${threadName}        ${body}  Completed by ${property.CamelAggregatedCompletedBy}  size:   ");
+
         }
     }
 }
- class BatchSizePredicate implements Predicate {
+
+class BatchSizePredicate implements Predicate {
 
     public int size;
 
     public BatchSizePredicate(int size) {
-            this.size = size;
+        this.size = size;
     }
 
     @Override
     public boolean matches(Exchange exchange) {
-            if (exchange != null) {
-                    ArrayList list = exchange.getIn().getBody(ArrayList.class);
-                    if (!Lists.emptyList().isEmpty() && list.size() == size) {
-                            return true;
-                    }
-            }
-            return false;
+        if (exchange != null) {
+            ArrayList list = exchange.getIn().getBody(ArrayList.class);
+            if (!Lists.emptyList().isEmpty() && list.size() == size) { return true; }
+        }
+        return false;
     }
 
 }

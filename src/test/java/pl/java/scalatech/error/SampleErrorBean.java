@@ -9,8 +9,13 @@ import org.apache.camel.Exchange;
 public class SampleErrorBean {
     public String log(@Body String str,Exchange exchange,Throwable th) {
            exchange.getProperties().entrySet().stream().forEach(t->log.info("{} => {}",t.getKey(),t.getValue()));
-           log.info("+++  body :  {}", exchange.getIn().getBody());
-           log.info("+++ th : {}",th);
+           Object o  = exchange.getProperty(Exchange.EXCEPTION_CAUGHT);
+           Exception cause = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
+           log.info("##### body :  {}", exchange.getIn().getBody());
+          // log.info("+++ properties  {}",exchange.getProperties());
+          
+           log.info("##### headers  {}",exchange.getIn().getHeaders());
+           log.info("##### th : {}",cause);
            return str;
     }
 }

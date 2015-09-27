@@ -21,14 +21,17 @@ public class OnExceptionHandlerTest {
     public void shouldOnFalseException() throws Exception {
         log.info("++++++++++++++++++++++++++++++ false +++++++++++++++++++++++++++++++++++++");
         ModelCamelContext context = new DefaultCamelContext();
-        context.setTracing(true);
+        context.setTracing(false);
         ProducerTemplate pt = context.createProducerTemplate();
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                onException(IllegalStateException.class).handled(false).to("seda:error");
-                from("seda:start").log(LoggingLevel.INFO, "myCamel", "+++ ${body}").setProperty("h1").constant("przodownik").bean(SampleErrorBean.class)
-                        .bean(ErrorBean.class).bean(SampleErrorBean.class).transform(constant("ok"));
+                onException(IllegalStateException.class).handled(false).setHeader("ex_stackTrace",simple("${exception.stacktrace}")).setBody(constant("ERROR!CODE!")).to("seda:error");
+                from("seda:start").log(LoggingLevel.INFO, "myCamel", "+++ ${body}")
+               
+                .bean(ErrorBean.class)
+              
+                .bean(SampleErrorBean.class).transform(constant("ok"));
                 from("seda:error").process(new ErrorLogProcessor());
             }
         });
@@ -42,15 +45,17 @@ public class OnExceptionHandlerTest {
     public void shouldOnTrueException() throws Exception {
         log.info("++++++++++++++++++++++++++++++ true +++++++++++++++++++++++++++++++++++++");
         ModelCamelContext context = new DefaultCamelContext();
-        context.setTracing(true);
+        context.setTracing(false);
         ProducerTemplate pt = context.createProducerTemplate();
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                onException(IllegalStateException.class).handled(true).to("seda:error");
-                from("seda:start").log(LoggingLevel.INFO, "myCamel", "+++ ${body}").setProperty("h1").constant("przodownik").bean(SampleErrorBean.class)
-                        .bean(ErrorBean.class).bean(SampleErrorBean.class).transform(constant("ok"));
-                from("seda:error").process(new ErrorLogProcessor());
+                onException(IllegalStateException.class).handled(true).setHeader("ex_stackTrace",simple("${exception.stacktrace}")).to("seda:error");
+                from("seda:start").log(LoggingLevel.INFO, "myCamel", "+++ ${body}")
+               .bean(ErrorBean.class)
+               .setHeader("ex_stackTrace",simple("${exception.stacktrace}")).setHeader("ex_message",simple("${exception.message}"))
+               .bean(SampleErrorBean.class).transform(constant("ok"));
+               from("seda:error").process(new ErrorLogProcessor());
             }
         });
         context.start();
@@ -65,14 +70,14 @@ public class OnExceptionHandlerTest {
     public void shouldOnContinueException() throws Exception {
         log.info("++++++++++++++++++++++++++++++  continue+++++++++++++++++++++++++++++++++++++");
         ModelCamelContext context = new DefaultCamelContext();
-        context.setTracing(true);
+        context.setTracing(false);
         ProducerTemplate pt = context.createProducerTemplate();
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
                 onException(IllegalStateException.class).continued(true);
                 from("seda:start").log(LoggingLevel.INFO, "myCamel", "+++ ${body}").setProperty("h1").constant("przodownik")
-                        .bean(ErrorBean.class).bean(SampleErrorBean.class).transform(constant("ok"));
+                        .bean(ErrorBean.class).setHeader("ex_stackTrace",simple("${exception.stacktrace}")).setHeader("ex_message",simple("${exception.message}")).bean(SampleErrorBean.class).transform(constant("ok"));
             }
         });
         context.start();

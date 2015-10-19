@@ -6,6 +6,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.hawtdb.HawtDBAggregationRepository;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.apache.camel.model.ModelCamelContext;
 import org.assertj.core.util.Lists;
@@ -26,7 +27,15 @@ public class SplitAndAggregateInvoiceTest extends CommonCreateCamelContext {
         @Override
         public ModelCamelContext getContext() {
             bindy = new BindyCsvDataFormat(pl.java.scalatech.spring_camel.csv.Invoice.class);
-
+            HawtDBAggregationRepository hawtDB = new HawtDBAggregationRepository("myrepo", "data/myrepo.dat");
+            // will recover by default
+            hawtDB.setUseRecovery(true);
+            // try at most 4 times
+            hawtDB.setMaximumRedeliveries(4);
+            // send to mock:dead if exhausted
+            hawtDB.setDeadLetterUri("mock:dead");
+            // have it retry every 3th second
+            hawtDB.setRecoveryInterval(3000);
             return super.getContext();
         }
 

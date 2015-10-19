@@ -1,12 +1,14 @@
 package pl.java.scalatech.spring_camel.config;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManagerFactory;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.jms.JmsComponent;
+import org.apache.camel.component.jpa.JpaComponent;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,6 +29,19 @@ public class CamelConfig implements CamelContextConfiguration {
     @PostConstruct
     public void init() {
         camelContext.setTracing(true);
+
+    }
+
+    /*
+     * <bean id="jpa" class="org.apache.camel.component.jpa.JpaComponent">
+     * <property name="entityManagerFactory" ref="entityManagerFactory" />
+     * </bean>
+     */
+    @Autowired
+    JpaComponent jpa(EntityManagerFactory emf) {
+        JpaComponent jpaComponent = new JpaComponent();
+        jpaComponent.setEntityManagerFactory(emf);
+        return jpaComponent;
 
     }
 

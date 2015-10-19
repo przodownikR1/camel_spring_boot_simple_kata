@@ -42,11 +42,12 @@ dependencies {
     
     compile 'org.apache.camel:camel-core:$camelVersion'
     compile 'org.apache.camel:camel-metrics:2.15.2' 
-   compile "org.apache.camel:camel-spring-boot:$camelVersion"
+    compile "org.apache.camel:camel-spring-boot:$camelVersion"
     compile "org.apache.camel:camel-quartz2:$camelVersion"
     compile 'org.apache.camel:camel-spring:$camelVersion'
-   compile 'org.apache.camel:camel-spring-javaconfig:2.15.2'
-   
+    compile 'org.apache.camel:camel-spring-javaconfig:2.15.2'
+    
+    
     compile "org.apache.camel:camel-jaxb:$camelVersion"
     compile 'javax.xml.bind:jaxb-api:2.2.12'
     compile 'javax.xml:jaxb-impl:2.1'
@@ -55,6 +56,9 @@ dependencies {
     compile "org.apache.camel:camel-jms:$camelVersion"
     compile "org.apache.camel:camel-stream:$camelVersion"
     compile "org.apache.camel:camel-saxon:$camelVersion"
+    compile "org.apache.camel:camel-hawtdb:$camelVersion"
+    compile "org.apache.camel:camel-jpa:$camelVersion"
+    
     
     compile("org.apache.activemq:activemq-broker")
     compile("org.apache.activemq:activemq-client")
@@ -69,6 +73,7 @@ dependencies {
     compile "org.apache.camel:camel-bindy:$camelVersion"
     compile "org.apache.camel:camel-servlet:$camelVersion"
     compile "org.apache.camel:camel-cxf:$camelVersion"
+    compile "org.apache.camel:camel-jpa:$camelVersion"
     
     compile("org.springframework:spring-jms:4.1.7.RELEASE")
     compile("org.apache.activemq:activemq-broker:5.11.1")
